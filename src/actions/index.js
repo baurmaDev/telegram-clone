@@ -20,3 +20,9 @@ export const fetchUser = () => {
         })
     };
 }
+export const selectedMessage = message => {
+    return {
+        type: 'SELECTED_MESSAGE',
+        payload: message
+    }
+}

@@ -4,6 +4,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import MessageSender from './MessageSender';
+import { connect } from 'react-redux';
+
+
 export class Chat extends Component {
     render() {
         return (
@@ -12,7 +16,7 @@ export class Chat extends Component {
                     <User>
                         <Avatar/>
                         <Status>
-                            <h3>Napoleon Bonapart</h3>
+                            <h3>{this.props.message.name}</h3>
                             <p>Last seen recently</p>
                         </Status> 
                     </User>
@@ -22,20 +26,38 @@ export class Chat extends Component {
                     </Buttons>
                 </Header>
                 <Display>
-
+                    DISPLAY
                 </Display>
-                <Input>
-                </Input>
+                <Message>
+                    <MessageSender />
+                </Message>
             </Container>
         )
     }
+    
 }
 
+const mapStateToProps = (state) => {
+    return {message: state.selectedMessage}
+};
+
+
+
+const Message = styled.div`
+    display: flex;
+    justify-content: center;
+    
+`
+const Display = styled.div`
+    flex-grow: 1;
+`
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     color: white;
     margin-left: 2px;
+    position: fixed;
+    height: 945px;
 `
 const Status = styled.div`
     display: flex;
@@ -74,6 +96,7 @@ const Vert = styled(MoreVertIcon)`
 `
 const Header = styled.div`
     display: flex;
+    width: 1395px;
     flex-direction: row;
     padding: 5px;
     height: 65px;
@@ -83,13 +106,9 @@ const Header = styled.div`
     box-shadow: 0 8px 8px rgba(0,0,0,0.25098);
 `
 
-const Display = styled.div`
-    
-`
 
-const Input = styled.div`
 
-`
+
 const User = styled.div`
     display: flex;
     align-items: center;
@@ -110,4 +129,4 @@ const Buttons = styled.div`
     }
 `
 
-export default Chat
+export default connect(mapStateToProps)(Chat) 

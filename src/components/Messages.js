@@ -7,26 +7,28 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { connect } from 'react-redux';
 import { fetchMessage } from '../actions';
 import { fetchUser } from '../actions';
+import { selectedMessage } from '../actions';
 
 export class Messages extends Component {
 
     componentDidMount(){
         this.props.fetchMessage();
-        this.props.fetchUser();
-        console.log(this.props.users);
+        
     }
-    renderUser(){
-        return this.props.users.map( user => {
-            return <h3>{user.username}</h3>
-        })
-    }
+    // renderUser(){
+    //     return this.props.users.map( user => {
+    //         return <h3>{user.username}</h3>
+    //     })
+    // }
     renderMessages(){
+        const { user } = this.props;
         return this.props.messages.map( message => {
-            return <Message>
+            return <Message key={message.id} onClick={() => this.props.selectedMessage(message)}>
                         <Avatar />
                         <Info>
                             <Title>
                                 {/* {this.renderUser()} */}
+                                <h3>{message.name}</h3>
                                 <Time>
                                     <span>13:07</span>
                                 </Time>
@@ -49,7 +51,6 @@ export class Messages extends Component {
                 </Header>
                 <Display>
                     {this.renderMessages()}
-                    {this.renderUser()}
                 </Display>
             </Container>
         )
@@ -59,7 +60,7 @@ export class Messages extends Component {
 const mapStateToProps = (state) => {
     return {
         messages: state.messages,
-        users: state.users
+        user: state.users.map( user => user.username) 
     };
 }
 
@@ -91,11 +92,13 @@ const Time = styled.div`
 const Message = styled.div`
     display: flex;
     padding: 0 0 10px 10px;
+
 `
 const Info = styled.div`
     display: flex;
     flex-direction: column;
     padding: 5px;
+    overflow: hidden;
     h3 {
         display: flex;
         justify-content: flex-start;
@@ -119,7 +122,7 @@ const Info = styled.div`
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        max-width: 25%;
+        max-width: 80%;
     }
 `
 const Header = styled.div `
@@ -158,7 +161,6 @@ const Form = styled.form`
   width: 380px;
   height: 53px;
   border-radius: 10rem;
-  
 `;
 
 const Input = styled.input`
@@ -179,9 +181,14 @@ const Input = styled.input`
   &::placeholder {
     color: #a2acb4;
   }
+  color: white;
 `;
 const Display = styled.div `
     width: 510px;
     margin-top: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 `
-export default connect(mapStateToProps, { fetchMessage, fetchUser })(Messages);
+export default connect(mapStateToProps, { fetchMessage, fetchUser, selectedMessage })(Messages);
