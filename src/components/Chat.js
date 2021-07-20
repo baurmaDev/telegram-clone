@@ -6,7 +6,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import MessageSender from './MessageSender';
 import { connect } from 'react-redux';
-
+import DisplayMessage from './DisplayMessage';
+import DisplayMyMessages from './DisplayMyMessages';
 
 export class Chat extends Component {
     render() {
@@ -26,7 +27,10 @@ export class Chat extends Component {
                     </Buttons>
                 </Header>
                 <Display>
-                    DISPLAY
+                    <Show>
+                        <DisplayMessage />
+                        <DisplayMyMessages />
+                    </Show> 
                 </Display>
                 <Message>
                     <MessageSender />
@@ -50,6 +54,20 @@ const Message = styled.div`
 `
 const Display = styled.div`
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+`
+const Show = styled.div`
+    display: flex;
+    width: 796px;
+    height: 805px;
+    position: fixed;
+    flex: 1;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: overlay;
+    
 `
 const Container = styled.div`
     display: flex;

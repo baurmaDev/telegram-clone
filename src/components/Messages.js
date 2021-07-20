@@ -6,7 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { connect } from 'react-redux';
 import { fetchMessage } from '../actions';
-import { fetchUser } from '../actions';
+
 import { selectedMessage } from '../actions';
 
 export class Messages extends Component {
@@ -59,8 +59,7 @@ export class Messages extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        messages: state.messages,
-        user: state.users.map( user => user.username) 
+        messages: state.messages
     };
 }
 
@@ -69,11 +68,11 @@ const Container = styled.div `
     display: flex;
     flex-direction: column;
     background-color: #212121;
+    cursor: pointer;
 `
 const Avatar = styled(AccountCircleIcon)`
     width: 70px !important;
-    height: 70px !important;
-    
+    height: 70px !important; 
 `
 const Title = styled.div`
     display: flex;
@@ -191,4 +190,4 @@ const Display = styled.div `
     right: 0;
     z-index: 10;
 `
-export default connect(mapStateToProps, { fetchMessage, fetchUser, selectedMessage })(Messages);
+export default connect(mapStateToProps, { fetchMessage, selectedMessage })(Messages);

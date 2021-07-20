@@ -5,6 +5,9 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
 
+import { connect } from 'react-redux';
+import { createMessage } from '../actions';
+import { fetchMyMessages } from '../actions';
 import styled from 'styled-components'
 import './MessageSender.css'
 
@@ -34,8 +37,10 @@ export class MessageSender extends Component {
         />
     }
 
-    onSubmit(formValues){
+    onSubmit = (formValues) => {
+        this.props.createMessage(formValues);
         console.log(formValues);
+        this.props.fetchMyMessages();
         formValues.Message = '';
         console.log(formValues);
     }
@@ -86,6 +91,10 @@ const Send = styled(SendIcon)`
 
 `
 
-export default  reduxForm({
+const wrappedForm = 
+    reduxForm({
     form: 'message'
 })(MessageSender);
+
+
+export default  connect(null, { createMessage, fetchMyMessages })(wrappedForm);
