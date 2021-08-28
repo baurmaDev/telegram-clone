@@ -18,12 +18,16 @@ export class DisplayMessage extends Component {
     //     })
     // }
 
+    
+
     render() {
         // console.log(this.props.myMessages)
         return (
             <Massage>
                 <Content>
-                    {this.props.message.body}
+                    {this.props.message.body ? this.props.message.name : this.props.messages
+                    .filter(first => first.id === 1)
+                    .map(message => message.body)}
                 </Content>
                 {/* {this.renderMyMessages()} */}
                 
@@ -34,7 +38,8 @@ export class DisplayMessage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        message: state.selectedMessage
+        message: state.selectedMessage,
+        messages: state.messages
     }
 };
 

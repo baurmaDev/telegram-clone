@@ -8,16 +8,32 @@ import MessageSender from './MessageSender';
 import { connect } from 'react-redux';
 import DisplayMessage from './DisplayMessage';
 import DisplayMyMessages from './DisplayMyMessages';
+import { Check } from '@material-ui/icons';
 
 export class Chat extends Component {
+
+    check(){
+        if(this.props.message.name){
+            return this.props.message.name
+        }else{
+            this.props.messages.filter(first => first.id === 1)
+        }
+    }
+
     render() {
+        console.log(this.props.messages.filter(first => first.id === 1));
         return (
             <Container>
                 <Header>
                     <User>
                         <Avatar/>
                         <Status>
-                            <h3>{this.props.message.name}</h3>
+                            <h3>{this.props.message.name ? this.props.message.name
+                                : this.props.messages
+                                .filter(first => first.id === 1)
+                                .map(message => message.name)
+                                }</h3>
+                                {/* <h3>{this.check()}</h3> */}
                             <p>Last seen recently</p>
                         </Status> 
                     </User>
@@ -42,7 +58,10 @@ export class Chat extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {message: state.selectedMessage}
+    return {
+        message: state.selectedMessage,
+        messages: state.messages
+    }
 };
 
 
